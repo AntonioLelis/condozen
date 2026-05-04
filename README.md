@@ -42,7 +42,7 @@ Siga os passos abaixo para configurar o projeto na sua máquina local.
 
 **1. Clone o repositório**
 ```bash
-git clone https://github.com/SEU_USUARIO/condozen.git
+git clone https://github.com/AntonioLelis/condozen.git
 cd condozen
 ```
 
@@ -108,3 +108,47 @@ condozen/
 ├── run.py                  # Ponto de entrada do servidor
 └── tasks.py                # Comandos de automação do Invoke
 ```
+
+## Fluxo de Trabalho (Git Workflow)
+
+Para manter a integridade da branch `main`, a equipe adota o seguinte fluxo de contribuição:
+
+### 1. Sincronização Inicial
+Antes de iniciar qualquer tarefa, atualize sua branch principal:
+```bash
+git checkout main
+git pull origin main
+```
+
+### 2. Criação de Feature Branch
+Crie uma branch específica para a funcionalidade ou correção que irá desenvolver:
+```bash
+git checkout -b feature/nome-da-funcionalidade
+```
+
+### 3. Desenvolvimento e Commit
+Após realizar as alterações, adicione os arquivos e realize o commit com uma mensagem clara:
+```bash
+git add .
+git commit -m "feat: descrição sucinta da funcionalidade"
+```
+
+### 4. Push e Pull Request
+Envie sua branch para o repositório remoto e abra um Pull Request (PR) via interface do GitHub:
+```bash
+git push origin feature/nome-da-funcionalidade
+```
+
+### 5. Revisão e Merge
+- O PR deve ser revisado por pelo menos um outro integrante da equipe.
+- Após a aprovação e a passagem dos testes automatizados, o merge para a `main` está autorizado.
+- A branch de feature deve ser deletada após o merge bem-sucedido.
+
+## Padrão de Commits
+
+Recomenda-se o uso de prefixos para identificar o propósito do commit:
+- `feat:` Novas funcionalidades.
+- `fix:` Correção de bugs.
+- `docs:` Alterações em documentação.
+- `style:` Formatação e ajustes visuais (CSS).
+- `test:` Adição ou modificação de testes.
