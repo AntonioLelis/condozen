@@ -68,7 +68,7 @@ inv install
 Crie um arquivo chamado `.env` na raiz do projeto e configure a URL de conexão com o banco de dados do Supabase. Utilize o modelo abaixo:
 
 ```env
-DATABASE_URL=postgresql+pg8000://postgres.[ID_PROJETO]:[SENHA]@aws-0-sa-east-1.pooler.supabase.com:6543/postgres
+DATABASE_URL=sqlite:///test.db
 ```
 
 ## Como Executar a Aplicação
