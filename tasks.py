@@ -46,3 +46,9 @@ def criar_admin(c):
         db.session.add(novo_admin)
         db.session.commit()
         print("✅ Usuário admin@condozen.com criado com sucesso! Senha: 123456")
+
+@task
+def test(c):
+    """Roda os testes automatizados usando o pytest"""
+    print("🧪 Rodando suíte de testes...")
+    c.run("pytest -v")
