@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CondoZen - Login</title>
+</head>
+<body style="font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9;">
+
+    <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px;">
+        <h2 style="text-align: center; color: #333;">Acesso CondoZen</h2>
+        
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div style="color: red; margin-bottom: 15px; text-align: center; font-size: 14px;">
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/login" style="display: flex; flex-direction: column; gap: 15px;">
+            <div>
+                <label>E-mail:</label><br>
+                <input type="email" name="email" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+            </div>
+            <div>
+                <label>Senha:</label><br>
+                <input type="password" name="senha" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+            </div>
+            <button type="submit" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Entrar
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
