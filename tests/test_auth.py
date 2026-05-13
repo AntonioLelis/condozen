@@ -12,7 +12,7 @@ def test_login_com_sucesso(client):
     }, follow_redirects=True)
     
     assert response.status_code == 200
-    assert b"Bem-vindo, Usu\xc3\xa1rio de Teste!" in response.data
+    assert b"Painel de Usu\xc3\xa1rio de Teste" in response.data
 
 def test_login_senha_errada(client):
     """Testa se a senha incorreta gera a mensagem de erro"""

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CondoZen - Dashboard</title>
+    <style>
+        .kanban-container { display: flex; gap: 20px; padding: 20px; align-items: flex-start; }
+        .kanban-column { 
+            background: #ebedf0; border-radius: 8px; width: 33%; min-height: 500px; padding: 10px;
+        }
+        .kanban-column h3 { text-align: center; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .card { 
+            background: white; border-radius: 4px; padding: 15px; margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #ccc;
+        }
+        .prioridade-Alta { border-left-color: #ff4d4d; }
+        .prioridade-Media { border-left-color: #ffa500; }
+        .prioridade-Baixa { border-left-color: #2ecc71; }
+        .card-meta { font-size: 12px; color: #666; margin-top: 10px; }
+    </style>
+</head>
+<body style="font-family: sans-serif; background-color: #f8f9fa; margin: 0;">
+
+    <nav style="background: #333; color: white; padding: 15px; display: flex; justify-content: space-between;">
+        <span><strong>CondoZen</strong> - Painel de {{ current_user.nome }}</span>
+        <a href="/logout" style="color: white; text-decoration: none;">Sair</a>
+    </nav>
+
+    <div class="kanban-container">
+        <div class="kanban-column">
+            <h3>Aberto ({{ kanban.aberto|length }})</h3>
+            {% for chamado in kanban.aberto %}
+                <div class="card prioridade-{{ chamado.prioridade }}">
+                    <strong>{{ chamado.titulo }}</strong>
+                    <p style="font-size: 14px;">{{ chamado.descricao }}</p>
+                    <div class="card-meta">
+                        📍 {{ chamado.local_ocorrencia }}<br>
+                        👤 {{ chamado.autor.nome }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="kanban-column">
+            <h3>Em Andamento ({{ kanban.andamento|length }})</h3>
+            {% for chamado in kanban.andamento %}
+                <div class="card prioridade-{{ chamado.prioridade }}">
+                    <strong>{{ chamado.titulo }}</strong>
+                    <div class="card-meta">👤 {{ chamado.autor.nome }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="kanban-column">
+            <h3>Concluído ({{ kanban.concluido|length }})</h3>
+            {% for chamado in kanban.concluido %}
+                <div class="card" style="opacity: 0.7;">
+                    <strike>{{ chamado.titulo }}</strike>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
