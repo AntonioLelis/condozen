@@ -6,19 +6,19 @@ from werkzeug.security import generate_password_hash
 @task
 def install(c):
     """Instala as dependencias do projeto."""
-    print("📦 Instalando dependências...")
+    print("Instalando dependências...")
     c.run("pip install -r requirements.txt")
 
 @task
 def run(c):
     """Roda o servidor de desenvolvimento do Flask."""
-    print("🚀 Subindo o servidor CondoZen...")
+    print("Subindo o servidor CondoZen...")
     c.run("python run.py")
 
 @task
 def test(c):
     """Roda os testes automatizados com pytest."""
-    print("🧪 Rodando a suite de testes...")
+    print("Rodando a suite de testes...")
     c.run("pytest -v")
 
 @task
@@ -50,7 +50,7 @@ def criar_admin(c):
 @task
 def test(c):
     """Roda os testes automatizados usando o pytest"""
-    print("🧪 Rodando suíte de testes...")
+    print("Rodando suíte de testes...")
     c.run("pytest -v")
 
 @task
