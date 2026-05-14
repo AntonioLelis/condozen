@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
-from .models import Usuario
+from .models import Usuario, Chamado
 
 main = Blueprint('main', __name__)
 
@@ -31,10 +31,23 @@ def login():
     return render_template('login.html')
 
 @main.route('/dashboard')
-@login_required # Isso aqui é a mágica: tranca a página pra quem não tá logado
+@login_required
 def dashboard():
-    return f"<h1>Bem-vindo, {current_user.nome}!</h1><p>Você é um: {current_user.perfil}</p><a href='/logout'>Sair</a>"
+    # Buscamos todos os chamados. 
+    # Se for Morador, vê só os dele. Se for Síndico/Zelador, vê todos.
+    if current_user.perfil == 'morador':
+        todos_chamados = Chamado.query.filter_by(autor_id=current_user.id).all()
+    else:
+        todos_chamados = Chamado.query.all()
 
+    # Separando os chamados por status para facilitar no HTML
+    dados_kanban = {
+        'aberto': [c for c in todos_chamados if c.status == 'Aberto'],
+        'andamento': [c for c in todos_chamados if c.status == 'Em Andamento'],
+        'concluido': [c for c in todos_chamados if c.status == 'Concluído']
+    }
+
+    return render_template('dashboard.html', kanban=dados_kanban)
 @main.route('/logout')
 @login_required
 def logout():
