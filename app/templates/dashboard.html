@@ -1,23 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>CondoZen - Dashboard</title>
     <style>
-        .kanban-container { display: flex; gap: 20px; padding: 20px; align-items: flex-start; }
-        .kanban-column { 
-            background: #ebedf0; border-radius: 8px; width: 33%; min-height: 500px; padding: 10px;
+        .kanban-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            align-items: flex-start;
         }
-        .kanban-column h3 { text-align: center; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        .card { 
-            background: white; border-radius: 4px; padding: 15px; margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-left: 5px solid #ccc;
+
+        .kanban-column {
+            background: #ebedf0;
+            border-radius: 8px;
+            width: 33%;
+            min-height: 500px;
+            padding: 10px;
         }
-        .prioridade-Alta { border-left-color: #ff4d4d; }
-        .prioridade-Media { border-left-color: #ffa500; }
-        .prioridade-Baixa { border-left-color: #2ecc71; }
-        .prioridade-Urgente { border-left-color: #8B0000; }
-        .card-meta { font-size: 12px; color: #666; margin-top: 10px; }
+
+        .kanban-column h3 {
+            text-align: center;
+            color: #444;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #ccc;
+        }
+
+        .prioridade-Alta {
+            border-left-color: #ff4d4d;
+        }
+
+        .prioridade-Media {
+            border-left-color: #ffa500;
+        }
+
+        .prioridade-Baixa {
+            border-left-color: #2ecc71;
+        }
+
+        .prioridade-Urgente {
+            border-left-color: #8B0000;
+        }
+
+        .card-meta {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
         .btn-novo {
             background-color: #28a745;
             color: white;
@@ -27,7 +67,11 @@
             font-size: 14px;
             font-weight: bold;
         }
-        .btn-novo:hover { background-color: #218838; }
+
+        .btn-novo:hover {
+            background-color: #218838;
+        }
+
         .alert-success {
             background-color: #d1e7dd;
             color: #0f5132;
@@ -37,11 +81,22 @@
             margin: 10px 20px 0;
             font-size: 14px;
         }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+            padding: 10px 16px;
+            border-radius: 4px;
+            margin: 10px 20px 0;
+            font-size: 14px;
+        }
     </style>
 </head>
-<body style="font-family: sans-serif; background-color: #f8f9fa; margin: 0;">
 
-    <nav style="background: #333; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+<body style="font-family: sans-serif; background-color: #f8f9fa; margin: 0;">
+    <nav
+        style="background: #333; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
         <span><strong>CondoZen</strong> - Painel de {{ current_user.nome }}</span>
         <div style="display: flex; gap: 16px; align-items: center;">
             <a href="/chamado/novo" class="btn-novo">+ Abrir Chamado</a>
@@ -50,46 +105,46 @@
     </nav>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
-
     <div class="kanban-container">
         <div class="kanban-column">
             <h3>Aberto ({{ kanban.aberto|length }})</h3>
             {% for chamado in kanban.aberto %}
-                <div class="card prioridade-{{ chamado.prioridade }}">
-                    <strong>{{ chamado.titulo }}</strong>
-                    <p style="font-size: 14px;">{{ chamado.descricao }}</p>
-                    <div class="card-meta">
-                        📍 {{ chamado.local_ocorrencia }}<br>
-                        👤 {{ chamado.autor.nome }}
-                    </div>
+            <div class="card prioridade-{{ chamado.prioridade }}">
+                <strong>{{ chamado.titulo }}</strong>
+                <p style="font-size: 14px;">{{ chamado.descricao }}</p>
+                <div class="card-meta">
+                    📍 {{ chamado.local_ocorrencia }}<br>
+                    👤 {{ chamado.autor.nome }}
                 </div>
+            </div>
             {% endfor %}
         </div>
 
         <div class="kanban-column">
             <h3>Em Andamento ({{ kanban.andamento|length }})</h3>
             {% for chamado in kanban.andamento %}
-                <div class="card prioridade-{{ chamado.prioridade }}">
-                    <strong>{{ chamado.titulo }}</strong>
-                    <div class="card-meta">👤 {{ chamado.autor.nome }}</div>
-                </div>
+            <div class="card prioridade-{{ chamado.prioridade }}">
+                <strong>{{ chamado.titulo }}</strong>
+                <div class="card-meta">👤 {{ chamado.autor.nome }}</div>
+            </div>
             {% endfor %}
         </div>
 
         <div class="kanban-column">
             <h3>Concluído ({{ kanban.concluido|length }})</h3>
             {% for chamado in kanban.concluido %}
-                <div class="card" style="opacity: 0.7;">
-                    <strike>{{ chamado.titulo }}</strike>
-                </div>
+            <div class="card" style="opacity: 0.7;">
+                <strike>{{ chamado.titulo }}</strike>
+            </div>
             {% endfor %}
         </div>
     </div>
 </body>
+
 </html>

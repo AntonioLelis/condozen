@@ -6,19 +6,25 @@ from werkzeug.security import generate_password_hash
 @task
 def install(c):
     """Instala as dependencias do projeto."""
-    print("📦 Instalando dependências...")
+
+    print("Instalando dependências...")
+
     c.run("pip install -r requirements.txt")
 
 @task
 def run(c):
     """Roda o servidor de desenvolvimento do Flask."""
-    print("🚀 Subindo o servidor CondoZen...")
+
+    print("Subindo o servidor CondoZen...")
+
     c.run("python run.py")
 
 @task
 def test(c):
     """Roda os testes automatizados com pytest."""
-    print("🧪 Rodando a suite de testes...")
+
+    print("Rodando a suite de testes...")
+
     c.run("pytest -v")
 
 @task
@@ -48,10 +54,12 @@ def criar_admin(c):
         print("✅ Usuário admin@condozen.com criado com sucesso! Senha: 123456")
 
 @task
-def test(c):
-    """Roda os testes automatizados usando o pytest"""
-    print("🧪 Rodando suíte de testes...")
-    c.run("pytest -v")
+def init_db(c):
+    """Cria as tabelas do banco de dados do zero"""
+    app = create_app()
+    with app.app_context():
+        db.create_all()
+        print("Tabelas criadas com sucesso no arquivo banco_local.db!")
 
 @task
 def popular_kanban(c):
@@ -74,4 +82,6 @@ def popular_kanban(c):
             db.session.add(c)
         
         db.session.commit()
+
         print("✅ Kanban populado com sucesso!")
+

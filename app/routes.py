@@ -33,7 +33,8 @@ def login():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    # Se for Morador, vê só os dele. Se for Síndico/Zelador, vê todos.
+
+ # Se for Morador, vê só os dele. Se for Síndico/Zelador, vê todos.
     if current_user.perfil == 'morador':
         todos_chamados = Chamado.query.filter_by(autor_id=current_user.id).all()
     else:
@@ -47,7 +48,6 @@ def dashboard():
     }
 
     return render_template('dashboard.html', kanban=dados_kanban)
-
 
 @main.route('/chamado/novo', methods=['GET', 'POST'])
 @login_required
@@ -85,8 +85,11 @@ def novo_chamado():
     return render_template('novo_chamado.html')
 
 
+
 @main.route('/logout')
 @login_required
 def logout():
     logout_user()
+    
     return redirect(url_for('main.login'))
+
